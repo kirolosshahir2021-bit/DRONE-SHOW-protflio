@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kirolos Shahir Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Concept: a night sky. Black ground, violet light, every show shown as lit formations on black. Single dark look by choice. */
+:root {
+  --bg: #05030a;
+  --bg-2: #0b0614;
+  --panel: #0f0919;
+  --violet: #8b5cf6;
+  --violet-deep: #4c1d95;
+  --lilac: #d8c8ff;
+  --fg: #f4f0fb;
+  --muted: #a99fbd;
+  --line: rgba(167, 139, 250, 0.22);
+  --glow: rgba(139, 92, 246, 0.35);
+  --grad-text: linear-gradient(100deg, #ffffff 0%, #d8c8ff 40%, #8b5cf6 100%);
+  --grad-line: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+  --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  padding-inline: clamp(16px, 5vw, 64px);
+  padding-block: 0 48px;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(60% 40% at 80% 0%, rgba(139, 92, 246, 0.22), transparent 70%),
+    radial-gradient(50% 35% at 0% 45%, rgba(76, 29, 149, 0.28), transparent 70%),
+    var(--bg);
+}
+a { color: var(--lilac); }
+a:focus-visible, button:focus-visible, video:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+.wrap { max-width: 1160px; margin-inline: auto; }
+
+/* top bar */
+.bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 20px; }
+.bar .name { font-family: var(--font-display); font-weight: 500; font-size: 0.8rem; letter-spacing: 0.04em; }
+.bar nav { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.bar nav a { color: var(--muted); text-decoration: none; }
+.bar nav a:hover { color: var(--fg); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 32px; align-items: center; padding-block: clamp(24px, 6vw, 72px) clamp(32px, 6vw, 72px); }
+.eyebrow { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--violet); margin: 0 0 16px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 5.4vw, 4rem); line-height: 1.08; margin: 0 0 20px; text-wrap: balance;
+  background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: 1.1rem; color: var(--muted); max-width: 52ch; margin: 0 0 28px; }
+.lede strong { color: var(--fg); font-weight: 600; }
+.stats { display: flex; flex-wrap: wrap; gap: 12px 32px; padding: 0; margin: 0; list-style: none; }
+.stats li { display: flex; flex-direction: column; min-width: 0; }
+.stats b { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.4rem, 3vw, 2rem); background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+.stats span { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.sky { position: relative; aspect-ratio: 1 / 1; max-width: 100%; border-radius: 50%; }
+.sky::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, var(--glow), transparent 68%); filter: blur(30px); }
+.sky canvas { position: relative; width: 100%; height: 100%; display: block; }
+
+/* shows */
+.shows { display: flex; flex-direction: column; gap: clamp(56px, 9vw, 112px); padding-block: 24px; }
+.rule { height: 1px; border: 0; margin: 0; background: var(--grad-line); }
+.show-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 32px; flex-wrap: wrap; margin-bottom: 20px; }
+.show-head .title { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; }
+.toggle { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg); background: rgba(139,92,246,.14); border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px; cursor: pointer; transition: border-color .2s, box-shadow .2s, background .2s; }
+.toggle:hover { border-color: var(--violet); box-shadow: 0 0 18px var(--glow); background: rgba(139,92,246,.24); }
+.toggle:focus-visible, .reel-play:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; }
+.toggle .ic { display: inline-block; margin-left: 6px; transition: transform .2s; }
+.toggle[aria-expanded="true"] .ic { transform: rotate(45deg); }
+.shots[hidden] { display: none; }
+.reel { margin: 18px 0 0; width: min(100%, 320px); }
+.reel-play, .reel iframe, .reel-video { display: block; width: 100%; aspect-ratio: 9 / 17; border: 1px solid var(--line); border-radius: 10px; background: #000; position: relative; overflow: hidden; padding: 0; cursor: pointer; color: var(--fg); }
+.reel iframe, .reel-video { cursor: auto; }
+.reel-video { object-fit: contain; }
+.reel-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .45; }
+.reel-play .play { position: absolute; left: 50%; top: 46%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%; background: linear-gradient(135deg, var(--violet), var(--violet-deep)); box-shadow: 0 0 28px var(--glow); }
+.reel-play .play::after { content: ""; position: absolute; left: 26px; top: 20px; border-left: 18px solid #fff; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
+.reel-play:hover .play { box-shadow: 0 0 40px var(--glow); }
+.reel-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; text-align: left; background: linear-gradient(transparent, rgba(5,3,10,.9)); }
+.show-head h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3.6vw, 2.5rem); line-height: 1.1; margin: 0; text-wrap: balance;
+  background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tags { display: flex; gap: 8px; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.tags span { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--lilac); }
+.note { color: var(--muted); max-width: 62ch; margin: 0 0 24px; }
+.grid { display: grid; gap: 14px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid.four-sq { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid.one { grid-template-columns: minmax(0, 1fr); }
+.frame { margin: 0; min-width: 0; background: #000; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; position: relative;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.6), 0 20px 60px -30px var(--glow); }
+.frame video, .frame img { display: block; width: 100%; height: auto; max-width: 100%; background: #000; }
+.frame.sq video, .frame.sq img { aspect-ratio: 1 / 1; object-fit: cover; }
+.frame.wide { aspect-ratio: 16 / 9; }
+.frame.wide img, .frame.wide video { width: 100%; height: 100%; object-fit: contain; }
+.frame figcaption { padding: 10px 14px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted); border-top: 1px solid var(--line); background: var(--panel); }
+
+/* about + contact */
+.about { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding-block: 24px; }
+.about h3 { font-family: var(--font-display); font-weight: 500; font-size: 0.95rem; margin: 0 0 8px; color: var(--lilac); }
+.about p { margin: 0; color: var(--muted); }
+.contact { text-align: left; padding-block: 24px 0; display: flex; flex-direction: column; gap: 14px; }
+.contact h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 3.4vw, 2.2rem); margin: 0; text-wrap: balance;
+  background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.contact .lines { display: flex; flex-wrap: wrap; gap: 8px 32px; font-family: var(--font-mono); font-size: 0.95rem; }
+.contact .lines span { user-select: all; overflow-wrap: anywhere; }
+.contact .lines a { color: var(--lilac); text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.contact .lines a:hover { color: var(--fg); }
+.copy { font: inherit; font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg); background: linear-gradient(120deg, var(--violet-deep), var(--violet)); border: 0; border-radius: 8px; padding: 10px 16px; cursor: pointer; width: fit-content; }
+.copy:hover { filter: brightness(1.15); }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .sky { max-width: 360px; margin-inline: auto; }
+  .grid.four-sq { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 520px) {
+  .grid.two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="name">Kirolos Shahir Roshdy</div>
+    <nav aria-label="Shows">
+      <a href="https://www.instagram.com/shahir.rar/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#schweppes">Schweppes</a>
+      <a href="#value">Value</a>
+      <a href="#vision-xgen">Vision XGen</a>
+      <a href="#tulate">Tulate</a>
+      <a href="#galambo">Galambo</a>
+      <a href="#mbc-masr">MBC Masr</a>
+      <a href="#hyde-park">Hyde Park</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="top">
+    <div>
+      <p class="eyebrow">Drone show pilot and designer</p>
+      <h1 id="top">I design the sky, then fly it.</h1>
+      <p class="lede">Creative technologist at <strong>XGen / Vision</strong> in Cairo. I turn logos, Arabic and English type, and ideas into drone formations, fix what goes wrong live on site, and also build interactive screens and visuals for events.</p>
+      <ul class="stats">
+        <li><b>1,400</b><span>Drones in the largest show</span></li>
+        <li><b>12+</b><span>Shows flown and designed</span></li>
+        <li><b>2025</b><span>Certified, HighGreat, China</span></li>
+      </ul>
+    </div>
+    <div class="sky" aria-hidden="true"><canvas id="sky"></canvas></div>
+  </section>
+
+  <main class="shows">
+    <section id="schweppes" aria-labelledby="h-schweppes">
+      <div class="show-head">
+        <div class="title"><h2 id="h-schweppes">Schweppes</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-schweppes">Shots (9) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>3D formations</span></div>
+      </div>
+      <p class="note">Nine formations from the first message to the logo: Arabic messages, berries, mint, bubbles, and a 3D can and logo that rotate in the sky.</p>
+      <div class="shots" id="shots-schweppes" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/schweppes-2.mp4" poster="media/schweppes-2.jpg" muted loop playsinline preload="metadata" aria-label="Arabic message"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-3.mp4" poster="media/schweppes-3.jpg" muted loop playsinline preload="metadata" aria-label="Blueberries"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-4.mp4" poster="media/schweppes-4.jpg" muted loop playsinline preload="metadata" aria-label="Lemon and mint"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-5.mp4" poster="media/schweppes-5.jpg" muted loop playsinline preload="metadata" aria-label="Berry, lemon, mint lettering"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-6.mp4" poster="media/schweppes-6.jpg" muted loop playsinline preload="metadata" aria-label="Schweppes mojito berry"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-7.mp4" poster="media/schweppes-7.jpg" muted loop playsinline preload="metadata" aria-label="Bubbles"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-8.mp4" poster="media/schweppes-8.jpg" muted loop playsinline preload="metadata" aria-label="3D rotating can"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-9.mp4" poster="media/schweppes-9.jpg" muted loop playsinline preload="metadata" aria-label="Experience wins"></video></figure>
+        <figure class="frame sq"><video src="media/schweppes-10.mp4" poster="media/schweppes-10.jpg" muted loop playsinline preload="metadata" aria-label="3D rotating Schweppes logo"></video></figure>
+      </div>
+      <figure class="reel"><video class="reel-video" src="media/schweppes-reel.mp4" poster="media/schweppes-reel.jpg" controls playsinline preload="none" aria-label="Schweppes drone show, behind the scenes and the live show"></video></figure>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="value" aria-labelledby="h-value">
+      <div class="show-head">
+        <div class="title"><h2 id="h-value">Value x Dubai Phone</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-value">Shots (10) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>Brand logos</span></div>
+      </div>
+      <p class="note">Logo reveals and offer messages for a phone launch. Each shot starts from the drones lighting up, then plays at real speed.</p>
+      <div class="shots" id="shots-value" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/value-1.mp4" poster="media/value-1.jpg" muted loop playsinline preload="metadata" aria-label="Logo reveal"></video></figure>
+        <figure class="frame sq"><video src="media/value-2.mp4" poster="media/value-2.jpg" muted loop playsinline preload="metadata" aria-label="Value x Dubai Phone"></video></figure>
+        <figure class="frame sq"><video src="media/value-3.mp4" poster="media/value-3.jpg" muted loop playsinline preload="metadata" aria-label="iPhone 18 Pro Max"></video></figure>
+        <figure class="frame sq"><video src="media/value-4.mp4" poster="media/value-4.jpg" muted loop playsinline preload="metadata" aria-label="The latest innovation"></video></figure>
+        <figure class="frame sq"><video src="media/value-5.mp4" poster="media/value-5.jpg" muted loop playsinline preload="metadata" aria-label="Get it now"></video></figure>
+        <figure class="frame sq"><video src="media/value-6.mp4" poster="media/value-6.jpg" muted loop playsinline preload="metadata" aria-label="0% interest"></video></figure>
+        <figure class="frame sq"><video src="media/value-7.mp4" poster="media/value-7.jpg" muted loop playsinline preload="metadata" aria-label="Up to 18 months"></video></figure>
+        <figure class="frame sq"><video src="media/value-9.mp4" poster="media/value-9.jpg" muted loop playsinline preload="metadata" aria-label="Value x Dubai Phone closing"></video></figure>
+        <figure class="frame sq"><video src="media/value-10.mp4" poster="media/value-10.jpg" muted loop playsinline preload="metadata" aria-label="By Vision Group, animated logo"></video></figure>
+        <figure class="frame sq"><video src="media/value-11.mp4" poster="media/value-11.jpg" muted loop playsinline preload="metadata" aria-label="XGen logo"></video></figure>
+      </div>
+      <figure class="reel"><video class="reel-video" src="media/value-reel.mp4" poster="media/value-reel.jpg" controls playsinline preload="none" aria-label="Value x Dubai Phone, behind the scenes and the live show"></video></figure>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="vision-xgen" aria-labelledby="h-vision-xgen">
+      <div class="show-head">
+        <div class="title"><h2 id="h-vision-xgen">Vision x XGen</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-vision-xgen">Shots (2) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>Company branding</span></div>
+      </div>
+      <p class="note">Vision Group and XGen Advanced Technology logos, built from the first drones in the air to the finished mark.</p>
+      <div class="shots" id="shots-vision-xgen" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/vision-1.mp4" poster="media/vision-1.jpg" muted loop playsinline preload="metadata" aria-label="Vision Group logo from take-off"></video></figure>
+        <figure class="frame sq"><video src="media/vision-2.mp4" poster="media/vision-2.jpg" muted loop playsinline preload="metadata" aria-label="XGen Advanced Technology"></video></figure>
+      </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="tulate" aria-labelledby="h-tulate">
+      <div class="show-head">
+        <div class="title"><h2 id="h-tulate">Tulate</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-tulate">Shots (5) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>Arabic and English type</span></div>
+      </div>
+      <p class="note">Hand-drawn Arabic lettering, an English slogan, a rose and a masked portrait, each tuned so it still reads from a distance.</p>
+      <div class="shots" id="shots-tulate" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/tulate-1.mp4" poster="media/tulate-1.jpg" muted loop playsinline preload="metadata" aria-label="Arabic lettering formation"></video></figure>
+        <figure class="frame sq"><video src="media/tulate-2.mp4" poster="media/tulate-2.jpg" muted loop playsinline preload="metadata" aria-label="Neon Arabic lettering formation"></video></figure>
+        <figure class="frame sq"><video src="media/tulate-3.mp4" poster="media/tulate-3.jpg" muted loop playsinline preload="metadata" aria-label="Summer to Tell formation"></video></figure>
+        <figure class="frame sq"><video src="media/tulate-4.mp4" poster="media/tulate-4.jpg" muted loop playsinline preload="metadata" aria-label="Rose in a hand formation"></video></figure>
+        <figure class="frame sq"><video src="media/tulate-5.mp4" poster="media/tulate-5.jpg" muted loop playsinline preload="metadata" aria-label="Masked portrait formation"></video></figure>
+      </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="galambo" aria-labelledby="h-galambo">
+      <div class="show-head">
+        <div class="title"><h2 id="h-galambo">Galambo</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-galambo">Shots (5) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>Logos and characters</span></div>
+      </div>
+      <p class="note">A beach-season show with brand logos, a download call to action, the Galambo mark and a DJ character built from drones.</p>
+      <div class="shots" id="shots-galambo" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/galambo-1.mp4" poster="media/galambo-1.jpg" muted loop playsinline preload="metadata" aria-label="Yalla Sahel logo"></video></figure>
+        <figure class="frame sq"><video src="media/galambo-2.mp4" poster="media/galambo-2.jpg" muted loop playsinline preload="metadata" aria-label="Download Tellr"></video></figure>
+        <figure class="frame sq"><video src="media/galambo-3.mp4" poster="media/galambo-3.jpg" muted loop playsinline preload="metadata" aria-label="Galambo logo"></video></figure>
+        <figure class="frame sq"><video src="media/galambo-4.mp4" poster="media/galambo-4.jpg" muted loop playsinline preload="metadata" aria-label="DJ character"></video></figure>
+        <figure class="frame sq"><video src="media/galambo-5.mp4" poster="media/galambo-5.jpg" muted loop playsinline preload="metadata" aria-label="Yalla Sahel in Arabic"></video></figure>
+      </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="mbc-masr" aria-labelledby="h-mbc-masr">
+      <div class="show-head">
+        <div class="title"><h2 id="h-mbc-masr">MBC Masr</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-mbc-masr">Shots (6) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>Broadcast event</span></div>
+      </div>
+      <p class="note">Logo, Arabic messages, a 3D cube, an interactive phone, a map of Egypt and the MMS lockup.</p>
+      <div class="shots" id="shots-mbc-masr" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/mbc-1.mp4" poster="media/mbc-1.jpg" muted loop playsinline preload="metadata" aria-label="MBC Masr logo"></video></figure>
+        <figure class="frame sq"><video src="media/mbc-2.mp4" poster="media/mbc-2.jpg" muted loop playsinline preload="metadata" aria-label="3D cube with Arabic message"></video></figure>
+        <figure class="frame sq"><video src="media/mbc-3.mp4" poster="media/mbc-3.jpg" muted loop playsinline preload="metadata" aria-label="mbc app"></video></figure>
+        <figure class="frame sq"><video src="media/mbc-5.mp4" poster="media/mbc-5.jpg" muted loop playsinline preload="metadata" aria-label="Chef hat"></video></figure>
+        <figure class="frame sq"><video src="media/mbc-6.mp4" poster="media/mbc-6.jpg" muted loop playsinline preload="metadata" aria-label="Map of Egypt"></video></figure>
+        <figure class="frame sq"><video src="media/mbc-7.mp4" poster="media/mbc-7.jpg" muted loop playsinline preload="metadata" aria-label="MMS lockup"></video></figure>
+      </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="hyde-park" aria-labelledby="h-hyde-park">
+      <div class="show-head">
+        <div class="title"><h2 id="h-hyde-park">Hyde Park Developments</h2><button class="toggle" type="button" aria-expanded="false" aria-controls="shots-hyde-park">Shots (8) <span class="ic" aria-hidden="true">+</span></button></div>
+        <div class="tags"><span>Drone show</span><span>Launch night</span></div>
+      </div>
+      <p class="note">Jellyfish, location names and launch lines written in the sky for a property launch.</p>
+      <div class="shots" id="shots-hyde-park" hidden>
+      <div class="grid four-sq">
+        <figure class="frame sq"><video src="media/hyde-park-1.mp4" poster="media/hyde-park-1.jpg" muted loop playsinline preload="metadata" aria-label="Jellyfish"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-2.mp4" poster="media/hyde-park-2.jpg" muted loop playsinline preload="metadata" aria-label="Sea creature"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-3.mp4" poster="media/hyde-park-3.jpg" muted loop playsinline preload="metadata" aria-label="Seashore Ras El Hekma"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-4.mp4" poster="media/hyde-park-4.jpg" muted loop playsinline preload="metadata" aria-label="Delivering phase 1 2026"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-5.mp4" poster="media/hyde-park-5.jpg" muted loop playsinline preload="metadata" aria-label="Hyde Park Developments"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-6.mp4" poster="media/hyde-park-6.jpg" muted loop playsinline preload="metadata" aria-label="New Land, New Story"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-7.mp4" poster="media/hyde-park-7.jpg" muted loop playsinline preload="metadata" aria-label="In the heart of New Cairo"></video></figure>
+        <figure class="frame sq"><video src="media/hyde-park-8.mp4" poster="media/hyde-park-8.jpg" muted loop playsinline preload="metadata" aria-label="One Hyde Park is launching now"></video></figure>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="about" aria-label="What else I do">
+    <div><h3>Flying</h3><p>Drone show pilot, plus high-speed drones, filming drones and facility cleaning drones.</p></div>
+    <div><h3>Design</h3><p>Formations and animation in 3D, from simple text to shapes that rotate in the sky, even on 500-drone shows.</p></div>
+    <div><h3>Interactive</h3><p>TouchDesigner visuals, interactive screens for events, motion graphics, VFX and 3D.</p></div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="h-contact">
+    <hr class="rule">
+    <h2 id="h-contact">Planning a show or an installation?</h2>
+    <div class="lines"><span id="mail">kirolosshahir2021@gmail.com</span><span>01225578791</span><span>Cairo, Egypt</span><a href="https://www.instagram.com/shahir.rar/" target="_blank" rel="noopener">instagram.com/shahir.rar</a></div>
+    <button class="copy" type="button" id="copyMail">Copy email</button>
+  </section>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Drone-point sphere
+  var c = document.getElementById("sky");
+  var ctx = c.getContext("2d");
+  var N = 520, pts = [], i;
+  for (i = 0; i < N; i++) {
+    var y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), th = i * 2.399963;
+    pts.push([Math.cos(th) * r, y, Math.sin(th) * r]);
+  }
+  var W = 0, H = 0, dpr = 1;
+  function size() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    var a = t * 0.00022, ca = Math.cos(a), sa = Math.sin(a), tilt = 0.5, ct = Math.cos(tilt), st = Math.sin(tilt);
+    var R = Math.min(W, H) * 0.36, cx = W / 2, cy = H / 2;
+    var list = [];
+    for (var k = 0; k < N; k++) {
+      var p = pts[k];
+      var x = p[0] * ca + p[2] * sa, z = -p[0] * sa + p[2] * ca, yy = p[1];
+      var y2 = yy * ct - z * st, z2 = yy * st + z * ct;
+      list.push([cx + x * R, cy + y2 * R, z2]);
+    }
+    list.sort(function (m, n) { return m[2] - n[2]; });
+    for (var j = 0; j < list.length; j++) {
+      var q = list[j], d = (q[2] + 1) / 2;
+      var rad = 1.1 + d * 2.1;
+      ctx.beginPath();
+      ctx.fillStyle = "hsla(" + (262 + d * 18) + ",90%," + (45 + d * 38) + "%," + (0.25 + d * 0.75) + ")";
+      ctx.arc(q[0], q[1], rad, 0, 6.2832);
+      ctx.fill();
+    }
+  }
+  size();
+  window.addEventListener("resize", function () { size(); if (reduce) draw(0); });
+  if (reduce) { draw(0); } else {
+    (function loop(t) { draw(t); requestAnimationFrame(loop); })(0);
+  }
+
+  // Play formation previews only while visible
+  var vids = document.querySelectorAll("video:not(.reel-video)");
+  if (reduce || !("IntersectionObserver" in window)) {
+    vids.forEach(function (v) { v.controls = true; });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () { v.controls = true; }); }
+        else { v.pause(); }
+      });
+    }, { threshold: 0.35 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+
+  // Expand and collapse each show's shots
+  function setOpen(btn, open) {
+    var box = document.getElementById(btn.getAttribute("aria-controls"));
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (box) { if (open) box.removeAttribute("hidden"); else box.setAttribute("hidden", ""); }
+  }
+  document.querySelectorAll(".toggle").forEach(function (b) {
+    b.addEventListener("click", function () { setOpen(b, b.getAttribute("aria-expanded") !== "true"); });
+  });
+  function openFromHash() {
+    var id = (location.hash || "").slice(1);
+    var sec = id && document.getElementById(id);
+    var b = sec && sec.querySelector(".toggle");
+    if (b) setOpen(b, true);
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
+
+  // Instagram reels play inline when pressed
+  document.querySelectorAll(".reel-play").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var f = document.createElement("iframe");
+      f.src = "https://www.instagram.com/reel/" + b.getAttribute("data-reel") + "/embed/";
+      f.setAttribute("allow", "autoplay; encrypted-media; fullscreen; picture-in-picture");
+      f.setAttribute("allowfullscreen", "");
+      f.setAttribute("scrolling", "no");
+      f.title = "Instagram reel";
+      b.parentNode.replaceChild(f, b);
+    });
+  });
+
+  // Copy email
+  var btn = document.getElementById("copyMail");
+  btn.addEventListener("click", function () {
+    var text = document.getElementById("mail").textContent;
+    function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy email"; }, 1800); }
+    function fallback() {
+      var rng = document.createRange(); rng.selectNodeContents(document.getElementById("mail"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(rng);
+      btn.textContent = "Selected";
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
